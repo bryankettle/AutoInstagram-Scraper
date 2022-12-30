@@ -16,6 +16,7 @@ on:
     #        │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
     #        │ │ │ │ │
     - cron: '0 * * * *'
+    
 jobs:
   AutoInstagram-Scraper:
     runs-on: ubuntu-latest
