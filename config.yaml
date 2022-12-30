@@ -1,10 +1,7 @@
 TrackedNames:
   - netflixtw
 
-TrackLifetime: 96 #3 days
-
-
-
+TrackLifetime: 72 #3 days
 
 LoginUsername: j4739331@gmail.com #change this to your password
 LoginPassword: 77889944 #change this to your password
