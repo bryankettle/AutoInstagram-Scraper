@@ -1,0 +1,40 @@
+name: Scheduler
+
+on:
+  push:
+      branches:
+        - main
+  schedule:
+    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    #        You can use https://crontab.guru to help generate
+    #        your cron syntax and confirm what time it will run
+    #
+    #        ┌───────────── minute 0, 59
+    #        │ ┌───────────── hour (0 - 23)
+    #        │ │ ┌───────────── day of the month (1 - 31)
+    #        │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #        │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #        │ │ │ │ │
+    - cron: '0 * * * *'
+jobs:
+  AutoInstagram-Scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Run Search
+        run: |
+          pip install -r requirements.txt
+          python3 ./main.py
+          
+      - name: commit files
+        run: |
+          now=`date`
+          git config --local user.email "action@github.com"
+          git config --local user.name "Github Action"
+          git add --all
+          git commit -m "[ci skip] update ${now}"
+          git push || echo 'Nothing to push'
