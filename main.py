@@ -62,7 +62,7 @@ def setupworkbook(workbook_name):
 def main ():
 
     TrackedNames, TrackLifetime, currenttracked, username, password = setupconfig()
-    date = datetime.today() - timedelta(hours=TrackLifetime+8)
+    date = datetime.utcnow() - timedelta(hours=TrackLifetime)
 
     print (f"tracking {TrackedNames} for {TrackLifetime} hours")
 
@@ -93,8 +93,8 @@ def main ():
                     continue
 
             try:
-                data = [post.owner_username, datetime.now(), "https://www.instagram.com/p/" + postsh + "/",
-                        post.typename, (post.date - timedelta(hours=-8)), post.likes, post.comments,
+                data = [post.owner_username, datetime.utcnow(), "https://www.instagram.com/p/" + postsh + "/",
+                        post.typename, post.date, post.likes, post.comments,
                         post.video_view_count]  # ,Post.video_duration]#,Post.is_sponsored]#Post.video_view_count,Post.video_duration,
                 page.append(data)
 
