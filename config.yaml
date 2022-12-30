@@ -3,5 +3,8 @@ TrackedNames:
 
 TrackLifetime: 96 #3 days
 
-LoginUsername: 123 #change this to your password
-LoginPassword: 123 #change this to your password
+
+
+
+LoginUsername: 12345678@gmail.com #change this to your password
+LoginPassword: 12345678 #change this to your password

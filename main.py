@@ -1,6 +1,7 @@
 
 import datetime
 from datetime import datetime, timedelta
+from time import sleep
 
 import instaloader
 import yaml
@@ -33,7 +34,9 @@ def setupconfig():
     TrackedNames = config.get('TrackedNames',[])
     TrackLifetime = config.get('TrackLifetime')
     currenttracked = read("currenttracked.yaml")
-    return TrackedNames, TrackLifetime, currenttracked
+    username = config.get('LoginUsername')
+    password = config.get('LoginPassword')
+    return TrackedNames, TrackLifetime, currenttracked, username, password
 
 
 def setupworkbook(workbook_name):
@@ -58,7 +61,7 @@ def setupworkbook(workbook_name):
 
 def main ():
 
-    TrackedNames, TrackLifetime, currenttracked = setupconfig()
+    TrackedNames, TrackLifetime, currenttracked, username, password = setupconfig()
     date = datetime.today() - timedelta(hours=TrackLifetime+8)
 
     print (f"tracking {TrackedNames} for {TrackLifetime} hours")
@@ -66,7 +69,11 @@ def main ():
     print("initialize instaloader bot")
     bot = instaloader.Instaloader()
 
-
+    if path.exists('session'):
+        bot.load_session_from_file(username,'session')
+    if bot.test_login() == None:
+        bot.login(user=username, passwd=password)
+        print (bot.test_login())
     #get the data
     for name in TrackedNames:
 
@@ -100,7 +107,7 @@ def main ():
                 save('currenttracked.yaml', currenttracked)
         wb.save(filename=f'Results/{name}.xlsx')
         wb.close()
-
+    bot.save_session_to_file('session')
 
 
 
